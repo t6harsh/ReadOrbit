@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Book</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Sidebar */
+        .navbar-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: rgb(233, 234, 235);
+            padding: 20px 0px;
+            color: rgb(69, 69, 69);
+            box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .navbar-sidebar .branding {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .navbar-sidebar .branding h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 2px;
+            color: rgb(69, 69, 69);
+        }
+
+        .navbar-sidebar .branding span {
+            display: block;
+            font-size: 12px;
+            font-style: italic;
+            padding: 4px;
+            color: rgb(69, 69, 69);
+        }
+        /* Styling for the branding link */
+        .branding-link {
+            text-align: center !important;
+            text-decoration: none; /* Remove underline */
+            color: rgb(69, 69, 69) !important; /* Default text color */
+            transition: color 0.3s ease; /* Smooth color change on hover */
+        }
+
+        /* Hover behavior for branding link */
+        .branding-link:hover {
+            color: rgb(0, 123, 255) !important; /* Change text color to blue */
+            background-color: inherit !important; /* Prevent background color change */
+        }
+
+        
+
+        .branding-link h1 {
+            font-size: 28px; /* Slightly larger for prominence */
+            font-weight: bold;
+            margin: 2px;
+            color: rgb(69, 69, 69); /* Matches the sidebar text */
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+
+
+        .branding-link span {
+            font-size: 14px; /* Slightly larger than before for readability */
+            font-style: italic;
+            padding: 4px;
+            color: rgb(100, 100, 100);
+            background-color: transparent; /* Ensure background is transparent */
+        }
+
+        .menu-content {
+            flex-grow: 1;
+        }
+
+        .dropdown-btn,
+        .navbar-sidebar a {
+            display: block;
+            color: rgb(69, 69, 69);
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 3px;
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dropdown-btn:hover,
+        .navbar-sidebar a:hover {
+            background-color: rgb(200, 200, 200);
+            color: rgb(30, 30, 30);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-container {
+            display: none;
+            padding-left: 20px;
+            background-color: rgb(220, 220, 220);
+        }
+
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate {
+            transform: rotate(180deg);
+        }
+        /* Logout Button */
+        .logout-btn {
+            text-align: center !important;
+            font-size: 16px;
+            color: white;
+            background-color: #d9534f !important ;
+            padding: 10px 20px !important;
+            border-radius: 10px !important;
+            margin: 0px auto !important;
+            text-decoration: none !important;
+            transition: transform 0.3s ease-in-out !important;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff0000 !important;
+            transform: scale(1.1);
+        }
+
+        .privacy-policy {
+            border-top: 1px solid rgb(200, 200, 200);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: rgb(100, 100, 100);
+            margin: 20px;
+            line-height: 1.4;
+        }
+
+        .privacy-policy strong {
+            display: block;
+            font-size: 14px;
+            color: rgb(50, 50, 50);
+            margin-bottom: 5px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 0;
+        }
+
+        .dashboard-header {
+            background-color: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: rgb(69, 69, 69);
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: rgb(69, 69, 69);
+            text-align: center;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-select[multiple] {
+            height: auto;
+            min-height: 150px;
+        }
+        
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for the sections list */
+        .section-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Small spacing between items */
+            font-size: 14px; /* Small text */
+        }
+
+        .section-item {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between checkbox and label */
+            font-size: 14px; /* Keep it consistent with small text */
+            color: rgb(69, 69, 69); /* Match the existing text color */
+        }
+
+        /* Checkbox styling to blend with the theme */
+        .section-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: rgb(69, 69, 69); /* Matches the text color for aesthetics */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-sidebar">
+        <div class="branding">
+            <a href="/admin_dashboard" class="branding-link">
+                <h1>ReadOrbit</h1>
+                <span>Your Digital Library</span>
+            </a>
+        </div>
+
+        <div class="menu-content">
+            <a href="/admin_dashboard">Admin Dashboard</a>
+            <button class="dropdown-btn">Manage Sections
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/section_create">Create Section</a>
+                <a href="/section_edit">Edit Section</a>
+                <a href="/section_delete">Delete Section</a>
+            </div>
+            <button class="dropdown-btn">Manage Books
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                
+                <a href="/book_edit">Edit Book</a>
+                <a href="/book_delete">Delete Book</a>
+            </div>
+            <a href="/admin_requests">View Requests</a>
+            <a href="/available_books">Available Books</a>
+            <a href="/feedback_list">Feedbacks</a>
+        </div>
+
+        <a href="/logout" class="logout-btn">Logout</a>
+
+        <div class="privacy-policy">
+            We respect your privacy. Any data you provide will not be shared without your consent.
+            Owned by Thakur Harsh Pratap Singh
+            <strong>Privacy and Policy</strong>
+        </div>
+    </div>
+    <div class="content">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Create Book</h1>
+        </div>
+
+        <div class="form-container">
+            <h2>New Book Details</h2>
+            <form method="post">
+                <label for="book_name">Book Name</label>
+                <input type="text" id="book_name" name="book_name" required="">
+
+                <label for="book_content">Content Link</label>
+                <input type="text" id="book_content" name="book_content" required="">
+
+                <label for="book_author_name">Author Name</label>
+                <input type="text" id="book_author_name" name="book_author_name" required="">
+
+                <label for="sections"><strong>Assign Sections:</strong></label>
+                <div class="section-list">
+                    {% for section in sections %}
+                    <div class="section-item">
+                        <input type="checkbox" name="section_ids" id = {{section.section_id}} value="{{section.section_id}}">
+                        <label for="{{section.section_id}}">{{section.section_name}}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit">Create Book</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdowns = document.getElementsByClassName("dropdown-btn");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                        this.querySelector('.fa-caret-down').classList.remove('rotate');
+                    } else {
+                        dropdownContent.style.display = "block";
+                        this.querySelector('.fa-caret-down').classList.add('rotate');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>    
+</html>

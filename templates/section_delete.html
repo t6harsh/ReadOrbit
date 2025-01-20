@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Section</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Sidebar */
+        .navbar-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: rgb(233, 234, 235);
+            padding: 20px 0px;
+            color: rgb(69, 69, 69);
+            box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .navbar-sidebar .branding {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .navbar-sidebar .branding h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 2px;
+            color: rgb(69, 69, 69);
+        }
+
+        .navbar-sidebar .branding span {
+            display: block;
+            font-size: 12px;
+            font-style: italic;
+            padding: 4px;
+            color: rgb(69, 69, 69);
+        }
+
+        .menu-content {
+            flex-grow: 1;
+        }
+
+        .dropdown-btn,
+        .navbar-sidebar a {
+            display: block;
+            color: rgb(69, 69, 69);
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 3px;
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Styling for the branding link */
+        .branding-link {
+            text-align: center !important;
+            text-decoration: none; /* Remove underline */
+            color: rgb(69, 69, 69) !important; /* Default text color */
+            transition: color 0.3s ease; /* Smooth color change on hover */
+        }
+
+        /* Hover behavior for branding link */
+        .branding-link:hover {
+            color: rgb(0, 123, 255) !important; /* Change text color to blue */
+            background-color: inherit !important; /* Prevent background color change */
+        }
+
+        
+
+        .branding-link h1 {
+            font-size: 28px; /* Slightly larger for prominence */
+            font-weight: bold;
+            margin: 2px;
+            color: rgb(69, 69, 69); /* Matches the sidebar text */
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+
+
+        .branding-link span {
+            font-size: 14px; /* Slightly larger than before for readability */
+            font-style: italic;
+            padding: 4px;
+            color: rgb(100, 100, 100);
+            background-color: transparent; /* Ensure background is transparent */
+        }
+
+
+
+        .dropdown-btn:hover,
+        .navbar-sidebar a:hover {
+            background-color: rgb(200, 200, 200);
+            color: rgb(30, 30, 30);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-container {
+            display: none;
+            padding-left: 20px;
+            background-color: rgb(220, 220, 220);
+        }
+
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            text-align: center !important;
+            font-size: 16px;
+            color: white;
+            background-color: #d9534f !important ;
+            padding: 10px 20px !important;
+            border-radius: 10px !important;
+            margin: 0px auto !important;
+            text-decoration: none !important;
+            transition: transform 0.3s ease-in-out !important;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff0000 !important;
+            transform: scale(1.1);
+        }
+
+        .privacy-policy {
+            border-top: 1px solid rgb(200, 200, 200);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: rgb(100, 100, 100);
+            margin: 20px;
+            line-height: 1.4;
+        }
+
+        .privacy-policy strong {
+            display: block;
+            font-size: 14px;
+            color: rgb(50, 50, 50);
+            margin-bottom: 5px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 0;
+        }
+
+        .dashboard-header {
+            background-color: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: rgb(69, 69, 69);
+            margin: 0;
+        }
+
+        .tiles-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .tile {
+            flex: 1 1 calc(33.333% - 20px);
+            max-width: calc(33.333% - 20px);
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tile h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .tile p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .tile a {
+            display: inline-block;
+            font-size: 14px;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .tile a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="navbar-sidebar">
+        <div class="branding">
+            <a href="/admin_dashboard" class="branding-link">
+                <h1>ReadOrbit</h1>
+                <span>Your Digital Library</span>
+            </a>
+        </div>
+        
+
+        <div class="menu-content">
+            <a href="/admin_dashboard">Admin Dashboard</a>
+            <button class="dropdown-btn">Manage Sections
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/section_create">Create Section</a>
+                <a href="/section_edit">Edit Section</a>
+            </div>
+            <button class="dropdown-btn">Manage Books
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/book_create">Create Book</a>
+                <a href="/book_edit">Edit Book</a>
+                <a href="/book_delete">Delete Book</a>
+            </div>
+            <a href="/admin_requests">View Requests</a>
+            <a href="/available_books">Available Books</a>
+            <a href="/feedback_list">Feedbacks</a>
+        </div>
+
+        <a href="/logout" class="logout-btn">Logout</a>
+
+        <div class="privacy-policy">
+            We respect your privacy. Any data you provide will not be shared without your consent.
+            Owned by Thakur Harsh Pratap Singh
+            <strong>Privacy and Policy</strong>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Delete Section</h1>
+        </div>
+
+        <div class="tiles-container">
+            {% for section in sections %}
+            <div class="tile">
+                <h3>{{ section.section_name }}</h3>
+                <p>Description: {{ section.section_description }}</p>
+                <p>Created On: {{ section.section_date_created }}</p>
+                <p>Max Books: {{ section.section_max_books }}</p>
+                <form method="post">
+                    <input type="number" hidden value="{{section.section_id}}" readonly name="section_id", id="section_id">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdowns = document.getElementsByClassName("dropdown-btn");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var dropdownContent = this.nextElementSibling;
+                    if (dropdownContent.style.display === "block") {
+                        dropdownContent.style.display = "none";
+                        this.querySelector(".fa-caret-down").classList.remove("rotate");
+                    } else {
+                        dropdownContent.style.display = "block";
+                        this.querySelector(".fa-caret-down").classList.add("rotate");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
