@@ -61,7 +61,7 @@ Key relationships:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ReadOrbit.git
+   git clone https://github.com/t6harsh/ReadOrbit.git
    cd ReadOrbit
    ```
 
@@ -79,7 +79,7 @@ Key relationships:
 
 5. **Run the application**
    ```bash
-   python mai.py
+   python main.py
    ```
 
 6. **Access the application**
